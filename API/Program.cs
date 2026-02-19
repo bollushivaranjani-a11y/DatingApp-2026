@@ -26,6 +26,8 @@ builder.Services.AddCors();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddScoped<IMemberRespository, MemberRespository>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -54,5 +56,26 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using var scope = app.Services.CreateScope();
+
+var services = scope.ServiceProvider;
+
+try
+{
+  var context = services.GetRequiredService<AppDBContext>();
+  
+  await context.Database.MigrateAsync();
+  // any pending migrations from context to DB
+  // DB will be created if not exits
+  await context.SaveChangesAsync();
+  await Seed.SeedUsers(context);
+
+}
+catch (Exception ex )
+{
+
+  var logger = services.GetRequiredService<ILogger<Program>>();
+  logger.LogError( ex , "an error occured dutring Migrations"); 
+}
 
 app.Run();
