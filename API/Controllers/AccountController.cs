@@ -24,6 +24,8 @@ public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
             DisplayName = registerDTO.DisplayName,
             Email = registerDTO.Email,
+            ImageUrl = "https://picsum.photos/200/300",          
+            //                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd")),
            PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
            PasswordSalt = hmac.Key
         };
@@ -51,6 +53,7 @@ public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
 
      using var hmac = new HMACSHA512(user.PasswordSalt);
 
+         //       PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd")),
      var computedhash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
 
      for(var i =0; i < computedhash.Length; i ++)
@@ -61,10 +64,10 @@ public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
             }
         }
 
-   // return  AppUserExtension.userextn(user,tokenService);
+    return  AppUserExtension.userextn(user,tokenService);
 
-   return user.userextn(tokenService);
-
+ //  return user.userextn(tokenService);
+ 
     }
 }
 
