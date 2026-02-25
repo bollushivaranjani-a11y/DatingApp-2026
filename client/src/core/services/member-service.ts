@@ -1,8 +1,9 @@
 import { HttpClient  } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
  
-import { Member, Photo } from '../../Types/member'; 
+import { EditableMember, Member, Photo } from '../../Types/member'; 
 import { environment } from '../../environments/environment';
+import { tap } from 'rxjs';
  
 
 @Injectable({
@@ -10,8 +11,9 @@ import { environment } from '../../environments/environment';
 })
 export class MemberService {
   private http = inject(HttpClient); 
-  private baseurl = environment.apiURL;
-
+  private baseurl = environment.apiUrl;
+  editMode = signal(false);
+  member = signal<Member | null>(null);
 
   getMembers()
   {
@@ -21,7 +23,9 @@ export class MemberService {
 
   getMember(id : string)
   {
-    return this.http.get<Member>(this.baseurl + 'members/' + id );
+    return this.http.get<Member>(this.baseurl + 'members/' + id ).pipe(
+      tap(member => { this.member.set(member) })
+    )
   }
 
  
@@ -31,7 +35,10 @@ return this.http.get<Photo[]>(this.baseurl + 'members/' + id + '/photos')
 }
 
 
-
+Updatemember(member : EditableMember)
+{
+ return this.http.put(this.baseurl + 'members', member);
+}
 
 
 

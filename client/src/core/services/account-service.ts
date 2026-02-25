@@ -14,11 +14,11 @@ export class AccountService {
   
   private http = inject(HttpClient);
  currentuser  = signal<User | null>(null);
-  baseurl =   environment.apiURL;
+  baseurl =   environment.apiUrl;
 
 register(creds : RegisterCreds)
 {
- return this.http.post<User>(this.baseurl + 'account/register' , creds).pipe(
+ return this.http.post<User>(this.baseurl + 'account/register' , creds, {withCredentials : true}).pipe(
       tap( user => {
         if(user)
         {
@@ -30,9 +30,9 @@ register(creds : RegisterCreds)
 
  
 
-  LoginSubmit(creds : LoginCreds)
+  login(creds : LoginCreds)
   {
-    return this.http.post<User>(this.baseurl + 'account/login' , creds).pipe(
+    return this.http.post<User>(this.baseurl + 'account/login' , creds, {withCredentials : true}).pipe(
       tap( user => {
         if(user)
         {
@@ -45,8 +45,8 @@ register(creds : RegisterCreds)
   setCurrentUser(user : User)
   {
      localStorage.setItem('user',JSON.stringify(user));
-     alert( localStorage.setItem('user',JSON.stringify(user)));
-          this.currentuser.set(user)
+     this.currentuser.set(user);
+     // alert( localStorage.setItem('user',JSON.stringify(user)));
   }
 
   logout()

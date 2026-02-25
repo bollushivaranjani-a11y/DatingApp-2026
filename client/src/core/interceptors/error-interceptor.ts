@@ -31,12 +31,12 @@ const router = inject(Router);
                }
                else
                 {
-                  toast.error(msg.error,5000);
+                  toast.error(msg.error);
                 }
               break;
 
                  case 401:
-              toast.error('Unauthorized',5000);
+              toast.error('Unauthorized');
               break;
 
                case 404:
@@ -51,7 +51,7 @@ const router = inject(Router);
               break;
 
           default:
-             toast.error('Something went wrong',5000);
+             toast.error('Something went wrong');
             break;
         }
       }

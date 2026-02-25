@@ -16,12 +16,12 @@ protected creds =   {} as RegisterCreds;
 private accountservice = inject(AccountService);
 RegisterSubmit()
 {
- // console.log(this.creds);
+  console.log(this.creds);
  this.accountservice.register(this.creds).subscribe({
   next : response => {
     console.log(response);
     this.CancelRegisterbtn();
- 
+  console.log("==== RegisterSubmit ========");
   },
   error : error => console.log(error)
  })

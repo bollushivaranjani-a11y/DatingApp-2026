@@ -18,7 +18,7 @@ document.body.appendChild(container);
     }
   }
 
-  private creatToastElement(message:string, alertclass: string, duration : 5000)
+  private creatToastElement(message:string, alertclass: string, duration = 5000)
   {
 const toastContainer = document.getElementById('toast-container') ;
 
@@ -45,22 +45,22 @@ toast.querySelector('button')?.addEventListener('click' , () => {
 
   }
 
-  success(  message :string, duration : 5000)
+  success(  message :string, duration?: number)
   {
   this.creatToastElement(message,'alert-success', duration );
   }
 
-    error(  message :string, duration : 5000)
+    error(  message :string, duration?: number)
   {
   this.creatToastElement(message,'alert-error', duration );
   }
 
-    warning(  message :string, duration : 5000)
+    warning(  message :string, duration?: number)
   {
   this.creatToastElement(message,'alert-warning', duration );
   }
 
-   info(  message :string, duration : 5000)
+   info(  message :string, duration?: number)
   {
   this.creatToastElement(message,'alert-info', duration );
   }

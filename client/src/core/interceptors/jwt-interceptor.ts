@@ -11,9 +11,11 @@ if(user)
 {
   req = req.clone({
     setHeaders:{
-      Authorization : `Bearer ${user.token}`
+      Authorization : 'Bearer ${user.token}'
     }
   })
+
+  console.log("======= JWT Interceptors =========");
 }
 
   return next(req);

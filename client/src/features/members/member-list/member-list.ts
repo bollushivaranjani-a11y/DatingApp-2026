@@ -20,6 +20,7 @@ protected members$ : Observable<Member[]>;
 constructor()
 {
   this.members$ = this.memberservice.getMembers();
+  console.log("==== MemberList =======");
 }
 
 
